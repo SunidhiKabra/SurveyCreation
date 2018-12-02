@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>QR Code for Evaluator</title>
+    <% include ./partials/scripts.ejs %>
+    <script type="text/javascript">
+        function generateBarCode()
+        {
+            var nric = $('#text').val();
+            if(!nric){
+              alert("Text field can't be empty!");
+            }
+            else{
+              var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + nric + '&amp;size=50x50';
+              $('#barcode').attr('src', url);
+              var x = document.getElementById("barcode");
+              x.style.display = "block";
+            }
+        }
+    </script>
+  </head>
+  <body>
+    <% include ./partials/header.ejs %>
+    <div class="container">
+      <div class="evaluatorPage">
+        <div class="row">
+          <div class="col-sm-4">
+            <label>Name of evaluator:</label>
+            <input id="text" type="text" placeholder="Full Name"/>
+            <br>
+            <button class="btn btn-default btn-success marginTop20px" onclick="generateBarCode()">Generate QR Code</button>
+          </div>
+          <div class="col-sm-8">
+            <div class="qrCode">
+              <img id='barcode' alt="QR code" width="250" height="250" style="display: none" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
