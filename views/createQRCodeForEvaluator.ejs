@@ -4,6 +4,21 @@
     <title>QR Code for Evaluator</title>
     <% include ./partials/scripts.ejs %>
     <script type="text/javascript">
+    //   var dataSet = {
+    //       {"imageUrl": "https://api.qrserver.com/v1/create-qr-code/?data=evaluator0&amp;size=50x50"} ,
+    //       {"imageUrl": "https://api.qrserver.com/v1/create-qr-code/?data=evaluator4&amp;size=50x50"}
+    // };
+
+ //    $(document).ready(function() {
+ //      var data = [
+ //        {"imageUrl": "https://api.qrserver.com/v1/create-qr-code/?data=evaluator0&amp;size=50x50"} ,
+ //        {"imageUrl": "https://api.qrserver.com/v1/create-qr-code/?data=evaluator4&amp;size=50x50"}
+ //      ];
+ //      var table = $('#example').DataTable( {
+ //        });
+ // });
+
+
         function generateBarCode()
         {
             var nric = $('#text').val();
@@ -11,13 +26,45 @@
               alert("Text field can't be empty!");
             }
             else{
-              var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + nric + '&amp;size=50x50';
-              $('#barcode').attr('src', url);
-              var x = document.getElementById("barcode");
-              x.style.display = "block";
+              var arr1 = [];
+              for(var i = 0; i < nric; i++){
+                  var url = 'https://api.qrserver.com/v1/create-qr-code/?data=evaluator' + i + '&amp;size=50x50';
+                  arr1[i]= url;
+              }
+              alert("arr1 = " + arr1);
             }
         }
+
+
+
+        function Person( name ) {
+          this._name     = name;
+
+          this.name = function () {
+              return this._name;
+          };
+      }
+
+
+      $(document).ready(function() {
+          var table = $('#example').DataTable({
+              columns: [
+                  { data: name, render: function(data, type, row, meta) {
+                        return '<img height="75%" width="75%" src="'+data+'" />';
+                        
+                    } }
+              ]
+          });
+
+          table.row.add( new Person( 'https://api.qrserver.com/v1/create-qr-code/?data=evaluator0&amp;size=50x50' ) );
+          table.row.add( new Person( 'https://api.qrserver.com/v1/create-qr-code/?data=evaluator0&amp;size=50x50' ) );
+          table.row.add( new Person( 'https://api.qrserver.com/v1/create-qr-code/?data=evaluator0&amp;size=50x50' ) );
+          table.draw();
+      } );
     </script>
+
+
+
   </head>
   <body>
     <% include ./partials/header.ejs %>
@@ -33,10 +80,22 @@
           <div class="col-sm-8">
             <div class="qrCode">
               <img id='barcode' alt="QR code" width="250" height="250" style="display: none" />
+              <!-- <img src="https://api.qrserver.com/v1/create-qr-code/?data=evaluator0&amp;size=50x50"/> -->
             </div>
           </div>
         </div>
       </div>
+
+
+      <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+            </tr>
+        </thead>
+    </table>
     </div>
   </body>
 </html>
